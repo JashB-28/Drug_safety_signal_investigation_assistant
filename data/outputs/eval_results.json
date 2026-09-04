@@ -1,0 +1,139 @@
+{
+  "method": {
+    "description": "Offline eval from a pinned synthetic snapshot; metrics read from the SQLite trace spine.",
+    "snapshot": "synthetic-eval-v1",
+    "snapshot_date": "2026-09-03",
+    "drug_event": "montelukast / neuropsychiatric events",
+    "reps": 3,
+    "generated_at": "2026-09-04T07:07:44.634785+00:00"
+  },
+  "hardware": {
+    "platform": "Windows-11-10.0.26200-SP0",
+    "processor": "Intel64 Family 6 Model 183 Stepping 1, GenuineIntel",
+    "python": "3.13.12",
+    "logical_cpus": 32,
+    "vram": "not measured (CPU-only run; report VRAM from `ollama ps` if GPU is used)"
+  },
+  "latency": {
+    "cold_ms": 41710.65,
+    "warm": {
+      "n": 2,
+      "p50_ms": 10982.36,
+      "p90_ms": 11193.14,
+      "p95_ms": 11193.14,
+      "min_ms": 10982.36,
+      "max_ms": 11193.14
+    },
+    "all_ms": [
+      41710.65,
+      11193.14,
+      10982.36
+    ]
+  },
+  "baseline_metrics": {
+    "model_calls": 8,
+    "tokens_input": 1394,
+    "tokens_output": 457,
+    "tokens_total": 1851,
+    "context_size_max": 297,
+    "retry_tokens": 0,
+    "tool_calls_attempted": 3,
+    "tool_calls_succeeded": 3,
+    "tool_calls_failed": 0,
+    "tool_calls_empty": 0,
+    "tool_calls_retried": 0,
+    "model_calls_invalid": 0,
+    "cache_hits": 3,
+    "records_read": 14,
+    "records_written": 0,
+    "bytes_read": 0,
+    "bytes_written": 0
+  },
+  "baseline_quality": {
+    "material_claims": 26,
+    "uncited_material_claims": 0,
+    "citation_completeness": 1.0,
+    "unsupported_claims": 0,
+    "output_schema_valid": true,
+    "all_required_sections": true,
+    "safety_boundary_compliant": true,
+    "validation_status": "passed",
+    "passed": true
+  },
+  "constrained_metrics": {
+    "model_calls": 5,
+    "tokens_input": 743,
+    "tokens_output": 299,
+    "tokens_total": 1042,
+    "context_size_max": 0,
+    "retry_tokens": 0,
+    "tool_calls_attempted": 3,
+    "tool_calls_succeeded": 3,
+    "tool_calls_failed": 0,
+    "tool_calls_empty": 0,
+    "tool_calls_retried": 0,
+    "model_calls_invalid": 0,
+    "cache_hits": 3,
+    "records_read": 14,
+    "records_written": 0,
+    "bytes_read": 0,
+    "bytes_written": 0
+  },
+  "constrained_quality": {
+    "material_claims": 15,
+    "uncited_material_claims": 0,
+    "citation_completeness": 1.0,
+    "unsupported_claims": 0,
+    "output_schema_valid": true,
+    "all_required_sections": true,
+    "safety_boundary_compliant": true,
+    "validation_status": "passed",
+    "passed": true
+  },
+  "baseline_vs_constrained": {
+    "baseline_tokens": 1851,
+    "constrained_tokens": 1042,
+    "token_reduction_pct": 43.7,
+    "quality_floor_held": true
+  },
+  "evidence_update_recompute": {
+    "recomputed_nodes": [
+      "analysis:aggregation",
+      "analysis:dedup",
+      "analysis:missingness",
+      "analysis:seriousness",
+      "analysis:temporal",
+      "memo:adverse_event_evidence",
+      "memo:executive_summary",
+      "memo:seriousness_missingness"
+    ],
+    "reused_nodes": [
+      "memo:conflicting_evidence",
+      "memo:drug_and_event",
+      "memo:external_evidence",
+      "memo:human_review_considerations",
+      "memo:investigation_question",
+      "memo:label_evidence",
+      "memo:limitations",
+      "memo:review_period",
+      "memo:source_references",
+      "memo:temporal_pattern",
+      "memo:unresolved_questions"
+    ],
+    "short_circuited_nodes": [
+      "analysis:temporal"
+    ],
+    "reused_count": 11,
+    "recomputed_count": 8,
+    "seriousness_before": [
+      7,
+      5
+    ],
+    "seriousness_after": [
+      7,
+      6
+    ],
+    "prior_run_preserved": true
+  },
+  "peak_memory_mb": 102.3
+}
