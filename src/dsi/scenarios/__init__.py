@@ -7,9 +7,11 @@ from dsi.scenarios.a_evidence_update import (
 )
 from dsi.scenarios.b_conflict import ScenarioBResult, run_scenario_b
 from dsi.scenarios.c_constrained import ScenarioCResult, run_scenario_c
+from dsi.scenarios.trace_report import generate_trace
 
 __all__ = [
     "run_scenario_a", "ScenarioAResult", "corrected_version_record",
     "run_scenario_b", "ScenarioBResult",
     "run_scenario_c", "ScenarioCResult",
+    "generate_trace",
 ]

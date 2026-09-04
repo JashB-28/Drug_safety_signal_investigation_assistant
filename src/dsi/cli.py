@@ -92,6 +92,11 @@ def main(argv: list[str] | None = None) -> int:
         return _cmd_eval()
     if argv and argv[0] == "scenarios":
         return _cmd_scenarios()
+    if argv and argv[0] == "trace-update":
+        from dsi.scenarios.trace_report import generate_trace
+        path = generate_trace()
+        print(f"Wrote before/after evidence-update trace to: {path}")
+        return 0
     print(
         "dsi (Drug Safety Signal Investigation Assistant)\n"
         f"version {__version__}\n"
@@ -99,8 +104,9 @@ def main(argv: list[str] | None = None) -> int:
         '  dsi investigate --drug "montelukast" --event "depression" '
         "--start 2019-01-01 --end 2021-12-31\n"
         "                  Investigate a pair with LIVE openFDA/PubMed evidence\n"
-        "  dsi eval        Run the reproducible offline evaluation\n"
-        "  dsi scenarios   Run the three challenge scenarios\n"
+        "  dsi eval          Run the reproducible offline evaluation\n"
+        "  dsi scenarios     Run the three challenge scenarios\n"
+        "  dsi trace-update  Write the before/after evidence-update trace\n"
     )
     return 0
 
