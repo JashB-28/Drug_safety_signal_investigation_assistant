@@ -2,57 +2,7 @@
 
 ## One-glance view
 
-```mermaid
-flowchart TB
-    subgraph CLI["CLI (dsi)"]
-        I["investigate / eval / scenarios"]
-    end
-
-    subgraph AGENT["Single investigation agent (LangGraph)"]
-        direction TB
-        INIT[initialize] --> NORM[normalize]
-        NORM --> DECIDE{{"decide (LLM)"}}
-        DECIDE -->|retrieve_*| TOOLS
-        DECIDE -->|run_analysis| ANA
-        DECIDE -->|check_sufficiency| SUFF[sufficiency]
-        DECIDE -->|detect_conflicts| CONF[conflicts]
-        DECIDE -->|generate_memo / stop| FIN[finalize]
-        TOOLS --> DECIDE
-        ANA --> DECIDE
-        SUFF --> DECIDE
-        CONF --> DECIDE
-    end
-
-    subgraph TOOLS["MCP tools (read-only)"]
-        T1[faers_search]
-        T2[label_fetch]
-        T3[literature_search]
-    end
-
-    subgraph ANA["Deterministic analysis (no LLM)"]
-        A1[normalize] & A2[aggregate] & A3[seriousness] & A4[missingness] & A5[dedup] & A6[temporal]
-    end
-
-    subgraph STORE["Persistence + trace (SQLite)"]
-        E[(evidence — immutable)]
-        AR[(analysis_results)]
-        M[(memos)]
-        DG[(dependency graph)]
-        C[(snapshot cache)]
-        TR[(trace spine)]
-    end
-
-    subgraph EXT["Public sources"]
-        FDA[(openFDA FAERS + label)]
-        PM[(PubMed)]
-    end
-
-    I --> AGENT
-    TOOLS -->|"live (investigate) or cache (eval)"| EXT
-    TOOLS --> C
-    AGENT --> STORE
-    FIN --> MEMO["Cited memo → safety validator"]
-```
+![Investigation flow — input → validate → normalize → decide loop (retrieve / analyze / check sufficiency / detect conflicts) → finalize → cited memo](architecture_flowchart.jpg)
 
 Everything the agent does flows through the **trace spine** (tokens/latency/outcome
 per tool + model call) and is persisted to SQLite. Evidence is stored **immutable**
