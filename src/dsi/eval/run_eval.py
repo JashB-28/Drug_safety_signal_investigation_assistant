@@ -12,7 +12,7 @@ import json
 import platform
 import time
 from dataclasses import asdict
-from datetime import date, datetime, timezone
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Callable
 
@@ -20,10 +20,11 @@ from dsi.agent.graph import RunContext, run_investigation
 from dsi.agent.llm import LLMClient, OllamaClient
 from dsi.config import get_settings
 from dsi.domain.state import Budget
-from dsi.eval import fixtures
 from dsi.eval.metrics import compute_run_metrics, latency_summary, peak_memory_mb
 from dsi.eval.quality_checks import check_memo
-from dsi.eval.seed import OfflineGuardClient, seed_cache
+from dsi.eval.seed import OfflineGuardClient
+from dsi.eval.fixtures import REAL_EVAL_INVESTIGATION
+from dsi.eval.snapshot import first_report_target, load_into_cache, snapshot_captured_at
 from dsi.mcp_server.server import ToolClients
 from dsi.persistence.db import Database
 from dsi.scenarios import corrected_version_record, run_scenario_a
@@ -47,11 +48,11 @@ def _hardware() -> dict:
 def run_eval(*, llm_factory: Callable[[], LLMClient], reps: int = 3,
              out_dir: str | Path = "data/outputs", reduction_target: float = 0.4) -> dict:
     settings = get_settings()
-    inv = fixtures.EVAL_INVESTIGATION
+    inv = REAL_EVAL_INVESTIGATION
 
-    # --- baseline reps (cold vs warm latency), fully offline from the seeded cache ---
+    # --- baseline reps (cold vs warm latency), fully offline from the REAL snapshot ---
     db = Database.create(":memory:")
-    seed_cache(db, inv)
+    load_into_cache(db, inv)
     latencies: list[float] = []
     last: RunContext | None = None
     last_run = ""
@@ -77,18 +78,19 @@ def run_eval(*, llm_factory: Callable[[], LLMClient], reps: int = 3,
                  / base_metrics["tokens_total"] if base_metrics["tokens_total"] else 0.0)
 
     # --- Scenario A: work reused vs recomputed after an evidence update ---
+    # Correct an ACTUAL case from the real snapshot (flip it to serious).
     db_a = Database.create(":memory:")
-    seed_cache(db_a, inv)
+    load_into_cache(db_a, inv)
     ctx_a = RunContext(db=db_a, llm=llm_factory(), tool_clients=_offline_clients())
+    rid, ver, reacts, rdate = first_report_target()
     a = run_scenario_a(ctx_a, inv, corrected_version_record(
-        "EV-002", 2, serious=True, reactions=["Insomnia", "Depression"],
-        receive_date=date(2019, 7, 15)))
+        rid, ver, serious=True, reactions=reacts, receive_date=rdate))
 
     report = {
         "method": {
-            "description": "Offline eval from a pinned synthetic snapshot; metrics read "
-                           "from the SQLite trace spine.",
-            "snapshot": fixtures.SNAPSHOT_LABEL, "snapshot_date": str(fixtures.SNAPSHOT_DATE),
+            "description": "Offline eval from a pinned REAL openFDA/PubMed snapshot; metrics "
+                           "read from the SQLite trace spine.",
+            "snapshot": "real-openfda-pubmed", "snapshot_date": snapshot_captured_at(),
             "drug_event": f"{inv.drug} / {inv.event}", "reps": reps,
             "generated_at": datetime.now(timezone.utc).isoformat(),
         },

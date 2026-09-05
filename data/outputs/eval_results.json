@@ -1,11 +1,11 @@
 {
   "method": {
-    "description": "Offline eval from a pinned synthetic snapshot; metrics read from the SQLite trace spine.",
-    "snapshot": "synthetic-eval-v1",
-    "snapshot_date": "2026-09-03",
-    "drug_event": "montelukast / neuropsychiatric events",
+    "description": "Offline eval from a pinned REAL openFDA/PubMed snapshot; metrics read from the SQLite trace spine.",
+    "snapshot": "real-openfda-pubmed",
+    "snapshot_date": "2026-09-05T03:03:27.894781+00:00",
+    "drug_event": "montelukast / depression",
     "reps": 3,
-    "generated_at": "2026-09-04T07:07:44.634785+00:00"
+    "generated_at": "2026-09-05T03:06:25.036872+00:00"
   },
   "hardware": {
     "platform": "Windows-11-10.0.26200-SP0",
@@ -15,27 +15,27 @@
     "vram": "not measured (CPU-only run; report VRAM from `ollama ps` if GPU is used)"
   },
   "latency": {
-    "cold_ms": 41710.65,
+    "cold_ms": 21085.27,
     "warm": {
       "n": 2,
-      "p50_ms": 10982.36,
-      "p90_ms": 11193.14,
-      "p95_ms": 11193.14,
-      "min_ms": 10982.36,
-      "max_ms": 11193.14
+      "p50_ms": 11217.32,
+      "p90_ms": 11414.4,
+      "p95_ms": 11414.4,
+      "min_ms": 11217.32,
+      "max_ms": 11414.4
     },
     "all_ms": [
-      41710.65,
-      11193.14,
-      10982.36
+      21085.27,
+      11414.4,
+      11217.32
     ]
   },
   "baseline_metrics": {
     "model_calls": 8,
-    "tokens_input": 1394,
-    "tokens_output": 457,
-    "tokens_total": 1851,
-    "context_size_max": 297,
+    "tokens_input": 1710,
+    "tokens_output": 451,
+    "tokens_total": 2161,
+    "context_size_max": 566,
     "retry_tokens": 0,
     "tool_calls_attempted": 3,
     "tool_calls_succeeded": 3,
@@ -44,13 +44,13 @@
     "tool_calls_retried": 0,
     "model_calls_invalid": 0,
     "cache_hits": 3,
-    "records_read": 14,
+    "records_read": 124,
     "records_written": 0,
     "bytes_read": 0,
     "bytes_written": 0
   },
   "baseline_quality": {
-    "material_claims": 26,
+    "material_claims": 62,
     "uncited_material_claims": 0,
     "citation_completeness": 1.0,
     "unsupported_claims": 0,
@@ -61,10 +61,10 @@
     "passed": true
   },
   "constrained_metrics": {
-    "model_calls": 5,
-    "tokens_input": 743,
-    "tokens_output": 299,
-    "tokens_total": 1042,
+    "model_calls": 6,
+    "tokens_input": 890,
+    "tokens_output": 349,
+    "tokens_total": 1239,
     "context_size_max": 0,
     "retry_tokens": 0,
     "tool_calls_attempted": 3,
@@ -74,13 +74,13 @@
     "tool_calls_retried": 0,
     "model_calls_invalid": 0,
     "cache_hits": 3,
-    "records_read": 14,
+    "records_read": 124,
     "records_written": 0,
     "bytes_read": 0,
     "bytes_written": 0
   },
   "constrained_quality": {
-    "material_claims": 15,
+    "material_claims": 59,
     "uncited_material_claims": 0,
     "citation_completeness": 1.0,
     "unsupported_claims": 0,
@@ -91,9 +91,9 @@
     "passed": true
   },
   "baseline_vs_constrained": {
-    "baseline_tokens": 1851,
-    "constrained_tokens": 1042,
-    "token_reduction_pct": 43.7,
+    "baseline_tokens": 2161,
+    "constrained_tokens": 1239,
+    "token_reduction_pct": 42.7,
     "quality_floor_held": true
   },
   "evidence_update_recompute": {
@@ -121,19 +121,21 @@
       "memo:unresolved_questions"
     ],
     "short_circuited_nodes": [
-      "analysis:temporal"
+      "analysis:aggregation",
+      "analysis:temporal",
+      "memo:adverse_event_evidence"
     ],
     "reused_count": 11,
     "recomputed_count": 8,
     "seriousness_before": [
-      7,
-      5
+      100,
+      85
     ],
     "seriousness_after": [
-      7,
-      6
+      100,
+      85
     ],
     "prior_run_preserved": true
   },
-  "peak_memory_mb": 102.3
+  "peak_memory_mb": 111.8
 }

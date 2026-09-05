@@ -25,6 +25,16 @@ EVAL_INVESTIGATION = Investigation(
     review_period=ReviewPeriod(start=date(2019, 1, 1), end=date(2021, 12, 31)),
 )
 
+# For the REAL-data snapshot eval, the event must be a specific openFDA/MedDRA reaction
+# term ("depression"), so a live FAERS query actually returns reports. `dsi snapshot`
+# captures this pair once; the eval then replays it offline. See dsi.eval.snapshot.
+REAL_EVAL_INVESTIGATION = Investigation(
+    investigation_id="inv_eval_real_montelukast",
+    drug="montelukast",
+    event="depression",
+    review_period=ReviewPeriod(start=date(2019, 1, 1), end=date(2021, 12, 31)),
+)
+
 
 def _report(rid, version, year, month, serious, death=False, sex=None, age=None,
             reactions=("Depression",), country="US"):

@@ -97,6 +97,12 @@ def main(argv: list[str] | None = None) -> int:
         path = generate_trace()
         print(f"Wrote before/after evidence-update trace to: {path}")
         return 0
+    if argv and argv[0] == "snapshot":
+        from dsi.eval.snapshot import capture_snapshot
+        print("Fetching LIVE openFDA/PubMed for the eval pair (montelukast / depression)...")
+        path = capture_snapshot()
+        print(f"Wrote real-data eval snapshot to: {path} (commit it; `dsi eval` replays it offline)")
+        return 0
     print(
         "dsi (Drug Safety Signal Investigation Assistant)\n"
         f"version {__version__}\n"
@@ -107,6 +113,7 @@ def main(argv: list[str] | None = None) -> int:
         "  dsi eval          Run the reproducible offline evaluation\n"
         "  dsi scenarios     Run the three challenge scenarios\n"
         "  dsi trace-update  Write the before/after evidence-update trace\n"
+        "  dsi snapshot      Capture the real openFDA/PubMed eval snapshot (needs network)\n"
     )
     return 0
 
