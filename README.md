@@ -17,6 +17,18 @@ reporting no increased risk). Rationale + sources: [docs/research_brief.md](docs
 
 **Local model:** `mistral:7b-instruct` via Ollama (local, no API key, no cost).
 
+## Assumptions
+
+These choices are documented in `docs/research_brief.md` and `docs/phase1_architecture.md`.
+
+- Review period: 2019–2021. Covers the time before and after the FDA's March 2020 boxed warning.
+- Exact event names are needed. Terms like "depression" can find reports; vague phrases may return no results.
+- Count each case once. `report_id` uses openFDA's `safetyreportid`. When a case has follow-ups, analyses use its latest version.
+- Key claims need citations. This includes numbers, dates, comparisons, and statements about sources.
+- Possible duplicates are flagged. Matching patient and report details suggest duplicates, but a person must review them.
+- Synonym support is limited. Name variations are mainly supported for the montelukast example; other inputs get basic cleanup.
+- Local AI, two data modes. The system uses `mistral:7b-instruct` through Ollama. Tests use a fixed synthetic dataset; investigations fetch live public data.
+
 ---
 
 ## Quick start
